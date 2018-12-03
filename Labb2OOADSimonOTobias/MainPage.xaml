@@ -2,8 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:Labb2OOADSimonOTobias" x:Class="Labb2OOADSimonOTobias.MainPage">
     <StackLayout>
         <Label Text="Have I been pwned?" HorizontalTextAlignment="Center"/>
-        <Entry Placeholder="Email"/>
-        <Button Text="Pwned?"/>
-        <Label/>
+        <Entry Placeholder="Email" Text="{Binding InputLabel}"/>
+        <Button Text="Pwned?" Command="{Binding PwnedButton}"/>
+        <Label Text="{Binding OutputLabel}"/>
     </StackLayout>
 </ContentPage>
