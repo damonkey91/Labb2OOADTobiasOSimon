@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Labb2OOADSimonOTobias.ValidationPattern;
 using Xamarin.Forms;
 
 namespace Labb2OOADSimonOTobias.ViewModels
@@ -8,8 +9,8 @@ namespace Labb2OOADSimonOTobias.ViewModels
     {
 
         public ICommand PwnedButton { get; set; }
-        private string _inputLabel = "";
-        public string InputLabel 
+        private ValidatableObject<string> _inputLabel;
+        public ValidatableObject<string> InputLabel
         { 
             get { return _inputLabel; } 
             set { SetProperty(ref _inputLabel, value); } 
@@ -27,8 +28,14 @@ namespace Labb2OOADSimonOTobias.ViewModels
 
         private void ClickedPwned()
         {
+
             //Todo: Make text validation
             //Todo: Make Api call
+        }
+
+        private void AddValidations() 
+        {
+            _inputLabel.Validations.Add
         }
     }
 }
