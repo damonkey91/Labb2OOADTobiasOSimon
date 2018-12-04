@@ -9,11 +9,11 @@ namespace Labb2OOADSimonOTobias.ViewModels
     {
 
         public ICommand PwnedButton { get; set; }
-        private ValidatableObject<string> _inputLabel;
+        private ValidatableObject<string> _inputLabel = new ValidatableObject<string> ();
         public ValidatableObject<string> InputLabel
         { 
             get { return _inputLabel; } 
-            set { SetProperty(ref _inputLabel, value); } 
+            set { _inputLabel = value; } 
         }
         private string _outputLabel = "";
         public string OutputLabel { 
@@ -24,18 +24,25 @@ namespace Labb2OOADSimonOTobias.ViewModels
         public MainPageVeiwModel()
         {
             PwnedButton = new Command(ClickedPwned);
+            AddValidations();
         }
 
         private void ClickedPwned()
         {
-
+            Validate();
             //Todo: Make text validation
             //Todo: Make Api call
         }
 
         private void AddValidations() 
         {
-            _inputLabel.Validations.Add
+            _inputLabel.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Enter an email!" });
+            _inputLabel.Validations.Add(new EmailRule<string> { ValidationMessage = "Email not valid!" });
+        }
+
+        private bool Validate()
+        {
+            return _inputLabel.Validate();
         }
     }
 }
