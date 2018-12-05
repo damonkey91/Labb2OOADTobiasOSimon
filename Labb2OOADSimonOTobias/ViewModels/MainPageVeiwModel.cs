@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace Labb2OOADSimonOTobias.ViewModels
 {
-    public class MainPageVeiwModel : BaseViewModel
+    public class MainPageVeiwModel : BaseViewModel, ICallback
     {
 
         public ICommand PwnedButton { get; set; }
@@ -20,6 +20,12 @@ namespace Labb2OOADSimonOTobias.ViewModels
             get { return _outputLabel; } 
             set { SetProperty(ref _outputLabel, value); } 
         }
+        private string _color = "Black";
+        public string MyColor 
+        { 
+            get { return _color; } 
+            set { SetProperty(ref _color, value); }
+        }
 
         public MainPageVeiwModel()
         {
@@ -29,9 +35,9 @@ namespace Labb2OOADSimonOTobias.ViewModels
 
         private void ClickedPwned()
         {
-            Validate();
-            //Todo: Make text validation
-            //Todo: Make Api call
+            if (Validate()){
+                HttpRequest.Request(InputLabel.Value, this);
+            }
         }
 
         private void AddValidations() 
@@ -43,6 +49,27 @@ namespace Labb2OOADSimonOTobias.ViewModels
         private bool Validate()
         {
             return _inputLabel.Validate();
+        }
+
+        public void Callback(int pwned)
+        {
+            switch (pwned)
+            {
+                case -1:
+                    OutputLabel = "Something went wrong";
+                    MyColor = "Blue";
+                    break;
+                case 0:
+                    OutputLabel = "Not pwned!";
+                    MyColor = "Green";
+                    break;
+                case 1:
+                    OutputLabel = "PWNED!!!";
+                    MyColor = "Red";
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
