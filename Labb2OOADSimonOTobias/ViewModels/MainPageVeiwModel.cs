@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
+using Labb2OOADSimonOTobias.Objects;
 using Labb2OOADSimonOTobias.ValidationPattern;
+using Labb2OOADSimonOTobias.Views;
 using Xamarin.Forms;
 
 namespace Labb2OOADSimonOTobias.ViewModels
 {
     public class MainPageVeiwModel : BaseViewModel, ICallback
     {
-
+        private bool IsEnabled { get; set; }
+        private List<BreachedSites> breachedSites;
+        public ICommand Navigate { get; set; }
         public ICommand PwnedButton { get; set; }
         private ValidatableObject<string> _inputLabel = new ValidatableObject<string> ();
         public ValidatableObject<string> InputLabel
@@ -29,12 +34,15 @@ namespace Labb2OOADSimonOTobias.ViewModels
 
         public MainPageVeiwModel()
         {
+            Navigate = new Command(Nav, () => IsEnabled);
             PwnedButton = new Command(ClickedPwned);
             AddValidations();
         }
 
         private void ClickedPwned()
         {
+            IsEnabled = false;
+            CanExecute();
             if (Validate()){
                 HttpRequest.Request(InputLabel.Value, this);
             }
@@ -51,7 +59,7 @@ namespace Labb2OOADSimonOTobias.ViewModels
             return _inputLabel.Validate();
         }
 
-        public void Callback(int pwned)
+        public void Callback(int pwned, List<BreachedSites> result)
         {
             switch (pwned)
             {
@@ -66,10 +74,24 @@ namespace Labb2OOADSimonOTobias.ViewModels
                 case 1:
                     OutputLabel = "PWNED!!!";
                     MyColor = "Red";
+                    breachedSites = result;
                     break;
                 default:
                     break;
             }
+            IsEnabled = result == null ? false : true;
+            CanExecute();
+        }
+        private void Nav()
+        {
+            ListViewPage listViewPage = new ListViewPage();
+            listViewPage.BindingContext = new ListViewViewModel(breachedSites);
+            Application.Current.MainPage.Navigation.PushAsync(listViewPage);
+        }
+
+        private void CanExecute()
+        {
+            (Navigate as Command).ChangeCanExecute();
         }
     }
 }

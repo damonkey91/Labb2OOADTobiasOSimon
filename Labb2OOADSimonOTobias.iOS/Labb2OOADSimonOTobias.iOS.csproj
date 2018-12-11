@@ -140,6 +140,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\bg.imageset\bg.jpeg" />
+    <ImageAsset Include="Assets.xcassets\bg.imageset\Contents.json" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -156,5 +158,8 @@
       <Project>{7E387185-55E8-4299-860C-CC9D210DBDB7}</Project>
       <Name>Labb2OOADSimonOTobias</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\bg.imageset\" />
   </ItemGroup>
 </Project>

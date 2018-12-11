@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using Flurl;
 using Flurl.Http;
+using Labb2OOADSimonOTobias.Objects;
+using Newtonsoft.Json;
+
 namespace Labb2OOADSimonOTobias
 {
     public class HttpRequest
@@ -19,22 +24,25 @@ namespace Labb2OOADSimonOTobias
                     .AllowHttpStatus(HttpStatusCode.NotFound).GetAsync();
                 if (getResp.StatusCode == HttpStatusCode.OK)
                 {
-                    callback.Callback(1);
+                    List<BreachedSites> result = JsonConvert.DeserializeObject<List<BreachedSites>>(getResp.Content.ReadAsStringAsync().Result);
+                    Debug.WriteLine(getResp.Content);
+                    Debug.WriteLine(result);
+                    callback.Callback(1, result);
                 }
                 else if (getResp.StatusCode == HttpStatusCode.NotFound)
                 {
-                    callback.Callback(0);
+                    callback.Callback(0, null);
                 }
             }
             catch (FlurlHttpException ex)
             {
                 string message = ex.ToString();
-                callback.Callback(-1);
+                callback.Callback(-1, null);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
-                callback.Callback(-1);
+                callback.Callback(-1, null);
             }
         }
     }

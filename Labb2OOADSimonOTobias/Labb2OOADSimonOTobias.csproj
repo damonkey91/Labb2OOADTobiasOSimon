@@ -17,5 +17,10 @@
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="ValidationPattern\" />
+    <Folder Include="Views\" />
+    <Folder Include="Objects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\MyPage.xaml.cs" />
   </ItemGroup>
 </Project>

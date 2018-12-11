@@ -22,7 +22,7 @@ namespace Labb2OOADSimonOTobias.ValidationPattern
         }
         public bool IsValid { 
             get { return _isValid; } 
-            set { _isValid = value; }
+            set { SetProperty(ref _isValid, value); }
         }
 
         public ValidatableObject()
