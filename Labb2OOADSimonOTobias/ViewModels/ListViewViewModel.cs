@@ -11,7 +11,6 @@ namespace Labb2OOADSimonOTobias.ViewModels
         public ListViewViewModel(List<BreachedSites> result)
         {
             ListSource = result;
-            //ListSource = new List<BreachedSites>() { new BreachedSites(){Name = "Tobias"}, new BreachedSites() { Name = "Muhammud" }, new BreachedSites() { Name = "Sebastian" } };
         }
     }
 }

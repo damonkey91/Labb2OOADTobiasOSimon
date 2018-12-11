@@ -5,12 +5,21 @@
              xmlns:local="clr-namespace:Labb2OOADSimonOTobias" 
              >
     <ContentPage.Content>
-        <ListView ItemsSource="{Binding ListSource}">
+        <ListView ItemsSource="{Binding ListSource}" RowHeight="60">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}"></TextCell>
+                    <ViewCell Height="60">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" BackgroundColor="Olive">
+                            <Image Source="{Binding MyImage}" HorizontalOptions="Start" HeightRequest="60" WidthRequest="60"/>
+                            <StackLayout Orientation="Vertical">
+                                <Label Text = "{Binding Name}" FontSize="Medium" TextColor="Black"/>
+                                <Label Text = "{Binding Domain}" FontSize="Small" TextColor="Black"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>   
     </ContentPage.Content>
 </ContentPage>
+

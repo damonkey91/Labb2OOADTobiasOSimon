@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using Flurl;
 using Flurl.Http;
 using Labb2OOADSimonOTobias.Objects;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace Labb2OOADSimonOTobias
 {
@@ -43,6 +45,30 @@ namespace Labb2OOADSimonOTobias
             {
                 Console.WriteLine(ex.ToString());
                 callback.Callback(-1, null);
+            }
+        }
+
+        public static async void RequestImage(string imageUrl, IImageCallback callback)
+        {
+            try
+            {
+                var getResp = await imageUrl
+                        .WithHeaders(new { Accept = "text/plain", User_Agent = "School project sweden" })
+                        .AllowHttpStatus(HttpStatusCode.NotFound).GetAsync();
+                if (getResp.StatusCode == HttpStatusCode.OK)
+                {
+                    var result = await getResp.Content.ReadAsByteArrayAsync();
+                    var imageSource = ImageSource.FromStream(() => new MemoryStream(result));
+                    callback.ImageCallback(imageSource);
+                }
+                else 
+                {
+                    callback.ImageCallback(null);
+                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                callback.ImageCallback(null);
             }
         }
     }
